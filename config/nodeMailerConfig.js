@@ -5,6 +5,10 @@ dotenv.config();
 
 const nodeMailerConfig = async (email, nome) => {
   try {
+    if (!GOOGLE_ACCOUNT_PASSWORD || !GOOGLE_ACCOUNT_USER) {
+      throw new Error("Variáveis de ambiente não configuradas");
+    }
+
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {

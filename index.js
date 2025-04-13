@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 
 import emailRouter from "./routes/email.route.js";
+import connectDB from "./config/connectDB.js";
 
 const app = express();
 const port = 3000;
@@ -9,12 +10,12 @@ const port = 3000;
 app.use(cors());
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
+// rotas de controle de email
 app.use("/api/email", emailRouter);
 
-app.listen(port, () => {
-  console.log(`Servidor rodando na porta ${port}`);
+// conecta ao banco e depois inicia o servidor
+connectDB().then(() => {
+  app.listen(port, () => {
+    console.log(`Servidor rodando na porta ${port}`);
+  });
 });

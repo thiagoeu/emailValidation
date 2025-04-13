@@ -11,7 +11,7 @@ export async function enviarEmailController(req, res) {
       });
     }
 
-    // Configura o transporte com Gmail e envia o e-mail
+    // Configura o transporte e envia o e-mail
     nodeMailerConfig(email, nome);
 
     return res.status(200).json({
