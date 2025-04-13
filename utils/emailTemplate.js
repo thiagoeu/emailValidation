@@ -1,8 +1,8 @@
-const verifyEmailTemplate = ({ name }) => {
+const emailTemplate = ({ nome }) => {
   return `
-    <p> Prezado(a) ${name},</p>
+    <p> Prezado(a) ${nome},</p>
     <p> Obrigado por se cadastrar no comercio, Estamos felizes em tê-lo(a) conosco.</p>
     `;
 };
 
-export default verifyEmailTemplate;
+export default emailTemplate;
