@@ -5,10 +5,11 @@ dotenv.config();
 
 const nodeMailerConfig = async (email, nome) => {
   try {
-    if (!GOOGLE_ACCOUNT_PASSWORD || !GOOGLE_ACCOUNT_USER) {
-      throw new Error("Variáveis de ambiente não configuradas");
+    if (!email || !nome) {
+      throw new Error("Email e nome obrigatórios");
     }
 
+    // Configura o transporte
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -26,8 +27,9 @@ const nodeMailerConfig = async (email, nome) => {
     };
 
     const info = await transporter.sendMail(mailOptions);
+    return console.log("Email enviado:", info.response);
   } catch (error) {
-    console.error("Erro ao enviar email:", error);
+    return console.error("Erro ao enviar email:", error);
   }
 };
 

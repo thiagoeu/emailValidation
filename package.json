@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "test": "vitest"
   },
   "keywords": [],
   "author": "",
@@ -19,6 +20,7 @@
     "nodemailer": "^6.10.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "nodemon": "^3.1.9",
+    "vitest": "^3.1.1"
   }
 }
