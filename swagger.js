@@ -40,8 +40,4 @@ const doc = {
   },
 };
 
-swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc).then(
-  async () => {
-    const appModule = await import("./index.js");
-  }
-);
+swaggerAutogen({ openapi: "3.0.0" })(outputFile, endpointsFiles, doc);
