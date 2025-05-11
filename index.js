@@ -6,7 +6,6 @@ import connectDB from "./config/connectDB.js";
 
 //swagger
 import swaggerUi from "swagger-ui-express";
-//import swaggerDocument from "./swagger_output.json" assert { type: "json" };
 
 import { readFile } from "fs/promises";
 
