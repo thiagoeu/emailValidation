@@ -5,7 +5,6 @@ vi.mock("../../config/nodeMailerConfig.js", () => ({
   default: vi.fn(() => Promise.resolve()),
 }));
 
-// Agora sim importa os mocks e o controller real
 import nodeMailerConfig from "../../config/nodeMailerConfig.js";
 import { enviarEmailController } from "../email.Controller.js";
 

@@ -4,6 +4,15 @@ import cors from "cors";
 import emailRouter from "./routes/email.route.js";
 import connectDB from "./config/connectDB.js";
 
+//swagger
+import swaggerUi from "swagger-ui-express";
+//import swaggerDocument from "./swagger_output.json" assert { type: "json" };
+
+import { readFile } from "fs/promises";
+
+const file = await readFile("./swagger_output.json", "utf-8");
+const swaggerDocument = JSON.parse(file);
+
 const app = express();
 const port = 3000;
 
@@ -19,3 +28,5 @@ connectDB().then(() => {
     console.log(`Servidor rodando na porta ${port}`);
   });
 });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
