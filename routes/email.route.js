@@ -6,7 +6,7 @@ const emailRouter = Router();
 emailRouter.post(
   "/send-email",
   /* #swagger.tags = ['Usuario']
-    #paths['/email/send-email']
+    #paths['/api/email/send-email']
   
   */
   enviarEmailController
