@@ -1,9 +1,15 @@
 import nodeMailerConfig from "../config/nodeMailerConfig.js";
+import generateOtp from "../utils/generateOTP.js";
+
+import User from "../models/user.model.js";
+import sendOtpEmail from "../services/sendOtpEmail.service.js";
+import UserModel from "../models/user.model.js";
 
 export async function enviarEmailController(req, res) {
   try {
-    const { nome, email } = req.body;
-    if (!nome || !email) {
+    const { name, email } = req.body;
+
+    if (!name || !email) {
       return res.status(400).json({
         message: "Nome e email obrigatórios",
         error: true,
@@ -12,7 +18,9 @@ export async function enviarEmailController(req, res) {
     }
 
     // Configura o transporte e envia o e-mail
-    await nodeMailerConfig(email, nome);
+    await nodeMailerConfig(email, name);
+
+    const user = await UserModel.create({ email, nome });
 
     return res.status(200).json({
       message: "Email enviado com sucesso",
@@ -23,6 +31,52 @@ export async function enviarEmailController(req, res) {
     console.error("Erro ao enviar email:", err);
     return res.status(500).json({
       message: "Erro interno ao enviar email" || err.message,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function sendOtpEmailController(req, res) {
+  try {
+    const { name, email } = req.body;
+
+    // Valida os campos
+    if (!email || !name) {
+      return res.status(400).json({
+        message: "Email e nome obrigatórios",
+        error: true,
+        success: false,
+      });
+    }
+
+    const otp = generateOtp();
+
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      {
+        $set: {
+          name: name, // Atualiza o nome se necessário
+          otp: otp,
+          otp_expiry: new Date(Date.now() + 15 * 60 * 1000),
+        },
+      },
+      {
+        upsert: true, // Cria novo usuário se não existir
+        new: true, // Retorna o usuário atualizado
+      }
+    );
+
+    await sendOtpEmail(email, name, otp);
+
+    return res.status(200).json({
+      message: "Email enviado com sucesso",
+      error: false,
+      success: true,
+    });
+  } catch (err) {
+    return res.status(500).json({
+      message: "Erro interno falha ao enviar otp email" || err.message,
       error: true,
       success: false,
     });

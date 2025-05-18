@@ -4,11 +4,11 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
-      required: [true, "Name is required"],
+      required: true,
     },
     email: {
       type: String,
-      required: [true, "Email is required"],
+      required: true,
       unique: true,
     },
     refresh_token: {
@@ -28,11 +28,11 @@ const userSchema = new mongoose.Schema(
       enum: ["Active", "Inactive", "Banned"],
       default: "Active",
     },
-    forgot_password_otp: {
+    otp: {
       type: String,
       default: null,
     },
-    forgot_password_otp_expiry: {
+    otp_expiry: {
       type: Date,
       default: "",
     },

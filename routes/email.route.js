@@ -1,5 +1,8 @@
 import { Router } from "express";
-import { enviarEmailController } from "../controllers/email.Controller.js";
+import {
+  enviarEmailController,
+  sendOtpEmailController,
+} from "../controllers/email.Controller.js";
 
 const emailRouter = Router();
 
@@ -10,6 +13,15 @@ emailRouter.post(
   
   */
   enviarEmailController
+);
+
+emailRouter.post(
+  "/send-otp-email",
+  /* #swagger.tags = ['Usuario']
+    #paths['/email/send-email']
+  
+  */
+  sendOtpEmailController
 );
 
 export default emailRouter;
