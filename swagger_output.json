@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/send-email": {
+    "/api/email/send-email": {
       "post": {
         "tags": [
           "Usuario"
