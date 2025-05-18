@@ -1,5 +1,6 @@
 import nodeMailerConfig from "../config/nodeMailerConfig.js";
 import generateOtp from "../utils/generateOTP.js";
+import emailTemplate from "../utils/emailTemplate.js";
 
 import User from "../models/user.model.js";
 import sendOtpEmail from "../services/sendOtpEmail.service.js";
@@ -88,7 +89,6 @@ export async function sendOtpEmailController(req, res) {
 export async function verifyEmailController(req, res) {
   try {
     const { email, otp } = req.query;
-    console.log(req.query);
 
     // verifica os campos
     if (!email || !otp) {
@@ -133,7 +133,7 @@ export async function verifyEmailController(req, res) {
     user.verify_email = true;
     await user.save();
 
-    return res.send("<h2>Email verificado com sucesso!</h2>");
+    return res.send(emailTemplate({ nome: user.name }));
   } catch (err) {
     return res.status(500).json({
       message: "Erro interno ao verificar email" || err.message,
