@@ -25,6 +25,11 @@ emailRouter.post(
   sendOtpEmailController
 );
 
-emailRouter.get("/verify-email", verifyEmailController);
+emailRouter.get(
+  "/verify-email",
+  /* #swagger.tags = ['Usuario']
+    #paths['api/email/verify-email']
+  */ verifyEmailController
+);
 
 export default emailRouter;

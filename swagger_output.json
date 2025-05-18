@@ -17,7 +17,7 @@
     }
   ],
   "paths": {
-    "/api/email/send-email": {
+    "/send-email": {
       "post": {
         "tags": [
           "Usuario"
@@ -85,6 +85,44 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/verify-email": {
+      "get": {
+        "tags": [
+          "Usuario"
+        ],
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "otp",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }
