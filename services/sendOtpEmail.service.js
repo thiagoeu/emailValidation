@@ -19,7 +19,7 @@ const sendOtpEmail = async (email, name, otp) => {
       },
     });
 
-    const verificationLink = `http://localhost:3000/verify-email?email=${email}&otp=${otp}`;
+    const verificationLink = `http://localhost:3000/api/email/verify-email?email=${email}&otp=${otp}`;
 
     // Define os dados do e-mail
     const mailOptions = {

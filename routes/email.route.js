@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   enviarEmailController,
   sendOtpEmailController,
+  verifyEmailController,
 } from "../controllers/email.Controller.js";
 
 const emailRouter = Router();
@@ -18,10 +19,12 @@ emailRouter.post(
 emailRouter.post(
   "/send-otp-email",
   /* #swagger.tags = ['Usuario']
-    #paths['/email/send-email']
+    #paths['api/email/send-email']
   
   */
   sendOtpEmailController
 );
+
+emailRouter.get("/verify-email", verifyEmailController);
 
 export default emailRouter;

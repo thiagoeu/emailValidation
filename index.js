@@ -6,9 +6,7 @@ import connectDB from "./config/connectDB.js";
 
 //swagger
 import swaggerUi from "swagger-ui-express";
-
 import { readFile } from "fs/promises";
-
 const file = await readFile("./swagger_output.json", "utf-8");
 const swaggerDocument = JSON.parse(file);
 

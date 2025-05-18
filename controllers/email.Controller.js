@@ -20,7 +20,8 @@ export async function enviarEmailController(req, res) {
     // Configura o transporte e envia o e-mail
     await nodeMailerConfig(email, name);
 
-    const user = await UserModel.create({ email, nome });
+    const user = await UserModel.create({ email, name });
+    console.log(user);
 
     return res.status(200).json({
       message: "Email enviado com sucesso",
@@ -52,6 +53,7 @@ export async function sendOtpEmailController(req, res) {
 
     const otp = generateOtp();
 
+    // Encontra ou cria o usuário
     const user = await User.findOneAndUpdate(
       { email: email },
       {
@@ -77,6 +79,64 @@ export async function sendOtpEmailController(req, res) {
   } catch (err) {
     return res.status(500).json({
       message: "Erro interno falha ao enviar otp email" || err.message,
+      error: true,
+      success: false,
+    });
+  }
+}
+
+export async function verifyEmailController(req, res) {
+  try {
+    const { email, otp } = req.query;
+    console.log(req.query);
+
+    // verifica os campos
+    if (!email || !otp) {
+      return res.status(400).json({
+        message: "Email e OTP obrigatórios",
+        error: true,
+        success: false,
+      });
+    }
+
+    // Encontra o usuário
+    const user = await User.findOne({ email: email });
+
+    // Verifica se o usuário foi encontrado
+    if (!user) {
+      return res.status(404).json({
+        message: "Usuário não encontrado",
+        error: true,
+        success: false,
+      });
+    }
+
+    //Verifica se o OTP esta correto
+    if (user.otp !== otp) {
+      return res.status(400).json({
+        message: "OTP inválido",
+        error: true,
+        success: false,
+      });
+    }
+
+    // Verifica se o OTP expirou
+    if (user.otp_expiry < Date.now()) {
+      return res.status(400).json({
+        message: "OTP expirado",
+        error: true,
+        success: false,
+      });
+    }
+
+    // Marca o usuário como verificado
+    user.verify_email = true;
+    await user.save();
+
+    return res.send("<h2>Email verificado com sucesso!</h2>");
+  } catch (err) {
+    return res.status(500).json({
+      message: "Erro interno ao verificar email" || err.message,
       error: true,
       success: false,
     });
