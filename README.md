@@ -20,7 +20,6 @@ Utiliza o Nodemailer para envio de OTPs (One-Time Passwords) e MongoDB para arma
 - Express
 - MongoDB com Mongoose
 - Nodemailer
-- dotenv
 - Swagger UI Express
 
 ## 📦 Instalação
